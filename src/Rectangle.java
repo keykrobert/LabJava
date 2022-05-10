@@ -1,90 +1,86 @@
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Rectangle {
-    int rectangleSideOne;
-    int rectangleSideTwo;
-    int rectangleSideThree;
+    int height;
+    int width;
 
-    public Rectangle(int sideOne, int sideTwo, int sideThree) {
-        rectangleSideOne = sideOne;
-        rectangleSideTwo = sideTwo;
-        rectangleSideThree = sideThree;
+    /**
+     *
+     * @param height
+     * @param width
+     */
+    public Rectangle(int height, int width) {
+        this.height = height;
+        this.width = width;
     }
 
-    public int getSideOne() {
-        return rectangleSideOne;
+    public int getHeight() {
+        return height;
     }
 
-    public int getSideTwo() {
-        return rectangleSideTwo;
+    public int getWidth() {
+        return width;
     }
 
-    public int getSideThree() {
-        return rectangleSideThree;
+    public void setHeight(int height) {
+        this.height = height;
+    }
+    public void setWidth(int width) {
+        this.width = width;
     }
 
-    public void setSideOne(int value) {
-        this.rectangleSideOne = (value <= 0) ? value : 1;
-        if (value <= 0) {
-            this.rectangleSideOne = 1;
-        } else {
-            this.rectangleSideOne = value;
+    public int getArea() {
+        return this.height * this.width;
+    }
+    public int getPerimeter(){
+        return 2 * (this.width + this.height);
+    }
+
+    public void checker() {
+        if(this.height == 0 || this.width == 0){
+            System.exit(1);
         }
     }
 
-    public void method1() {
+    public boolean isSquare() {
+        return this.width == this.height;
     }
 
-    public void method2() {
-    }
-
-    public void method3() {
-    }
-
-    public void method4() {
-    }
-
-    public void method5() {
-    }
-
-    public void setSideTwo(int value) {
-        if (value <= 0) {
-            this.rectangleSideOne = 1;
-        } else {
-            this.rectangleSideTwo = value;
-        }
-    }
-
-    public void setSideThree(int value) {
-        if (value <= 0) {
-            this.rectangleSideThree = 1;
-        } else {
-            this.rectangleSideThree = value;
-        }
+    public double getDiagonal(){
+        return Math.pow(Math.pow(this.height, 2) + Math.pow(this.width, 2), 1/2);
     }
 
     @Override
-    public String toString() {
-        return "Nothing";
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Rectangle)) return false;
+        Rectangle rectangle = (Rectangle) o;
+        return getHeight() == rectangle.getHeight() && getWidth() == rectangle.getWidth();
     }
 
     @Override
     public int hashCode() {
-        return 2 + 2;
+        return Objects.hash(getHeight(), getWidth());
     }
 
     @Override
-    public boolean equals(final Object obj) {
-        if (this == obj) return true;
-        if (obj == null) return false;
-        return true;
+    public String toString() {
+        return "Rectangle{" +
+                "height=" + height +
+                ", width=" + width +
+                '}';
     }
 
+
     public static void main(String[] args) {
-        Rectangle sides = new Rectangle(2, 4, 5);
-        System.out.println(sides.getSideOne());
-        sides.setSideOne(5);
-        System.out.println(sides.getSideOne());
+        Rectangle rectangle = new Rectangle(2, 4);
+        rectangle.checker();
+        System.out.println(rectangle.getHeight());
+        rectangle.setHeight(5);
+        System.out.println(rectangle.getWidth());
+        System.out.println(rectangle.getPerimeter());
+        System.out.println(rectangle.getArea());
 
     }
 }

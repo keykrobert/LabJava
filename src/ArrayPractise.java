@@ -1,50 +1,107 @@
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Locale;
 
 public class ArrayPractise {
-
-    static String[] separate(String text) {
-        return text.split("[ ,.]+");
+    static String searchingWord = "harry";
+    static String distinctWords = "harry potter";
+    public static String longestWord(String[] words) {
+        String resString = "";
+        for (String word : words) {
+            if (word.length() > resString.length())
+                resString = word;
+        }
+        return resString;
     }
 
-    public static void main(String[] args) {
-        String roman = "Mr. and Mrs. Dursley, of number four, Privet Drive, were proud to say that they were perfectly\n" +
-                "normal, thank you very much. They were the last people you’d expect to be involved in anything\n" +
-                "strange or mysterious, because they just didn’t hold with such nonsense.\n" +
-                " Mr. Dursley was the director of a firm called Grunnings, which made drills. He was a big, beefy\n" +
-                "man with hardly any neck, although he did have a very large mustache. Mrs. Dursley was thin\n" +
-                "and blonde and had nearly twice the usual amount of neck, which came in very useful as she\n" +
-                "spent so much of her time craning over garden fences, spying on the neighbors. The Dursleys\n" +
-                "had a small son called Dudley and in their opinion there was no finer boy anywhere.\n" +
-                " The Dursleys had everything they wanted, but they also had a secret, and their greatest fear was\n" +
-                "that somebody would discover it. They didn’t think they could bear it if anyone found out about\n" +
-                "the Potters. Mrs. Potter was Mrs. Dursley’s sister, but they hadn’t met for several years; in fact,\n" +
-                "Mrs. Dursley pretended she didn’t have a sister, because her sister and her good-for-nothing\n" +
-                "husband were as unDursleyish as it was possible to be. The Dursleys shuddered to think what the\n" +
-                "neighbors would say if the Potters arrived in the street. The Dursleys knew that the Potters had a\n" +
-                "small son, too, but they had never even seen him. This boy was another good reason for keeping\n" +
-                "the Potters away; they didn’t want Dudley mixing with a child like that.\n" +
-                " When Mr. and Mrs. Dursley woke up on the dull, gray Tuesday our story starts, there was\n" +
-                "nothing about the cloudy sky outside to suggest that strange and mysterious things would soon be\n" +
-                "happening all over the country. Mr. Dursley hummed as he picked out his most boring tie for\n" +
-                "work, and Mrs. Dursley gossiped away happily as she wrestled a screaming Dudley into his high\n" +
-                "chair.\n" +
-                " None of them noticed a large, tawny owl flutter past the window.\n" +
-                " At half past eight, Mr. Dursley picked up his briefcase, pecked Mrs. Dursley on the cheek, and\n" +
-                "tried to kiss Dudley good-bye but missed, because Dudley was now having a tantrum and\n" +
-                "throwing his cereal at the walls. ";
-        String[] words = roman.split("[ ,.]+");
+    public static int countLinesWithHarry(String[] words) {
+        int counter = 0;
         for (String word : words) {
-            System.out.println(word);
+            if (word.equals(searchingWord)) {
+                counter++;
+            }
+        }
+        return counter;
+    }
+
+    public static int searchingDistinctWords(String[] words) {
+        String[] distinct = distinctWords.split(" ");
+
+        int counter = 0;
+        for (int i = 0; i <= words.length; i++) {
+            if (i < words.length) {
+                if (words[i].equals(distinct[0]) && words[i + 1].equals(distinct[1])) {
+                    counter++;
+                }
+            }
+        }
+        return counter;
+    }
+
+    public static int countWordsBeginFromLetterC(String[] words) {
+        int counter = 0;
+        for (String word : words) {
+            char[] wordToArray = word.toLowerCase().toCharArray();
+            if (wordToArray[0] == 'c') {
+                counter++;
+            }
+        }
+        return counter;
+    }
+
+    public static int intersectionsOfHashes() {
+        HashSet<String> hashOne = new HashSet<String>();
+        HashSet<String> hashTwo = new HashSet<String>();
+        hashOne.add("Task1");
+        hashOne.add("Task2");
+        hashOne.add("Task3");
+        hashOne.add("Task4");
+
+        hashTwo.add("Task2");
+        hashTwo.add("Task4");
+        hashTwo.add("Task3");
+        hashTwo.add("Task5");
+        hashTwo.add("Task6");
+
+        HashSet<String> intersection = new HashSet<String>(hashOne);
+        intersection.retainAll(hashTwo);
+        System.out.println(intersection);
+        return intersection.size();
+    }
+
+    public static void main(String[] args) throws IOException {
+
+        String content = new String(Files.readAllBytes(Paths.get("/Users/Zver/Desktop/harry.txt")));
+        content = content.toLowerCase(Locale.ROOT).replaceAll("[^A-Za-z ]", "");
+        String[] words = content.split(" +");
+
+        String uniqueAsString = "";
+
+        for(int i = 0; i < words.length ; i++){
+            if(!uniqueAsString.contains(words[i])){
+                uniqueAsString += words[i] + " ";
+            }
+        }
+        String[] uniqueAsArray = uniqueAsString.split(" ");
+
+        Arrays.sort(uniqueAsArray);
+
+        for(int i = 0; i < 10 ; i++){
+            System.out.println(uniqueAsArray[i]);
         }
 
-        String names[] = {"Gabi", "Anna", "Robert", "Krista"};
-        Arrays.sort(names);
+        System.out.println("Longest word: " + longestWord(words));
+        System.out.println("Counts Harry: " + countLinesWithHarry(words));
+        System.out.println("Counts Harry Potter: " + searchingDistinctWords(words));
+        System.out.println("Counts words begin C: " + countWordsBeginFromLetterC(words));
+        System.out.println("Task 5-6: " + intersectionsOfHashes());
 
-        System.out.println("\n\nNames: ");
-        for (int i = 0; i < names.length; i++) {
-            System.out.println(names[i]);
-        }
+
+
 
     }
 }

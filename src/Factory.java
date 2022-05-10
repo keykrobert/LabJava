@@ -210,7 +210,7 @@ class PersonBuilder {
     private int weight;
     private Set<PersonBuilder> parents;
 
-    /* ---=== getters are supposed to be here. We skipped this part of code to make it simple ===--- */
+
 
     public static class Builder {
         private PersonBuilder newPerson;
@@ -288,7 +288,6 @@ class MyInteger {
             }
         }
         return flag;
-
     }
 
     public static void main(String[] args) {

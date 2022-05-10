@@ -1,30 +1,39 @@
 import java.util.ArrayList;
 import java.util.List;
 
-//interface Employer {
-//
-//    public void setEmployeeKey(int employeeKey, String name, int salary);
-//    public void setEmployeeKey(int employeeKey);
-//    public void setName(String name);
-//    public void setSalary(int salary);
-//    public int getEmployeeKey();
-//    public String getName();
-//    public int getSalary();
-//    public boolean addEmployer(Constructor employer);
-//    public void printEmployer(Constructor employer);
-//}
 
-class Employee {
+class PartTime {
 
-    public List<Employee> data = new ArrayList<Employee>();
+    public List<PartTime> data = new ArrayList<PartTime>();
     public int employeeKey;
     public String name;
     public int salary;
 
-    public Employee(int employeeKey, String name, int salary) {
+    public int days;
+
+    public int rate;
+
+    public PartTime(int employeeKey, String name, int days, int rate) {
         this.employeeKey = employeeKey;
         this.name = name;
-        this.salary = salary;
+        this.days = days;
+        this.rate = rate;
+    }
+
+    public int getRate() {
+        return this.rate;
+    }
+
+    public void setRate(int rate) {
+        this.rate = rate;
+    }
+
+    public int getDays() {
+        return this.days;
+    }
+
+    public void setDays(int days) {
+        this.days = days;
     }
 
     public void setEmployeeKey(int employeeKey) {
@@ -35,9 +44,6 @@ class Employee {
         this.name = name;
     }
 
-    public void setSalary(int salary) {
-        this.salary = salary;
-    }
 
     public int getEmployeeKey() {
         return this.employeeKey;
@@ -48,10 +54,10 @@ class Employee {
     }
 
     public int getSalary() {
-        return this.salary;
+        return getRate() * 8 * getDays();
     }
 
-    public boolean addEmployer(Employee employer) {
+    public boolean addEmployer(PartTime employer) {
         if (employer == null || data.contains(employer)) {
             return false;
         }
@@ -59,13 +65,13 @@ class Employee {
         return true;
     }
 
-    public void printEmployer(FullDayEmployee employer) {
+    public void printEmployer(PartTime employer) {
         System.out.println("key: " + employer.employeeKey + " \nName: " + employer.getName() + " \nSalary: " + employer.getSalary());
     }
 
-    public Employee getByKey(int key) {
-        Employee result = null;
-        for (Employee employer : data) {
+    public PartTime getByKey(int key) {
+        PartTime result = null;
+        for (PartTime employer : data) {
             if (employer.getEmployeeKey() == key) {
                 result = employer;
             }
@@ -75,7 +81,7 @@ class Employee {
 
     public int totalSalary() {
         int totalSalary = 0;
-        for (Employee employer : data) {
+        for (PartTime employer : data) {
             totalSalary += employer.getSalary();
         }
         return totalSalary;
@@ -84,7 +90,7 @@ class Employee {
     public int highestSalary() {
         int max = 0;
         int key = 0;
-        for (Employee employer : data) {
+        for (PartTime employer : data) {
 
             if (employer.getSalary() > max) {
                 max = employer.getSalary();
@@ -97,7 +103,7 @@ class Employee {
     public int lowestSalary() {
         int min = 999999999;
         int key = 0;
-        for (Employee employer : data) {
+        for (PartTime employer : data) {
 
             if (employer.getSalary() < min) {
                 min = employer.getSalary();
@@ -110,7 +116,7 @@ class Employee {
     public int averageSalary() {
         int sum = 0;
         int count = 0;
-        for (Employee employer : data) {
+        for (PartTime employer : data) {
             sum += employer.getSalary();
             count++;
         }
@@ -118,7 +124,7 @@ class Employee {
     }
 
     public void printEmployee() {
-        for (Employee employer : data) {
+        for (PartTime employer : data) {
             System.out.println("\nkey: " + employer.employeeKey + " \nName: " + employer.getName() + " \nSalary: " + employer.getSalary());
         }
     }
@@ -131,10 +137,31 @@ class FullDayEmployee {
     public String name;
     public int salary;
 
-    public FullDayEmployee(int employeeKey, String name, int salary) {
+    public int rate;
+
+    public int hours;
+
+    public FullDayEmployee(int employeeKey, String name, int rate, int hours) {
         this.employeeKey = employeeKey;
         this.name = name;
-        this.salary = salary;
+        this.rate = rate;
+        this.hours = hours;
+    }
+
+    public int getRate() {
+        return this.rate;
+    }
+
+    public void setRate(int rate) {
+        this.rate = rate;
+    }
+
+    public int getHours() {
+        return this.hours;
+    }
+
+    public void setHours(int hours) {
+        this.hours = rate;
     }
 
     public void setEmployeeKey(int employeeKey) {
@@ -158,7 +185,7 @@ class FullDayEmployee {
     }
 
     public int getSalary() {
-        return this.salary;
+        return this.rate * this.hours;
     }
 
     public boolean addEmployer(FullDayEmployee employer) {
@@ -237,10 +264,10 @@ class FullDayEmployee {
 
 class Checker {
     static public void main(String args[]) {
-        FullDayEmployee fullDayEmployee = new FullDayEmployee(48, "Mark", 1000);
-        fullDayEmployee.addEmployer(new FullDayEmployee(49, "Carl", 1200));
-        fullDayEmployee.addEmployer(new FullDayEmployee(50, "Vasa", 3300));
-        fullDayEmployee.addEmployer(new FullDayEmployee(60, "Adalbert", 600));
+        FullDayEmployee fullDayEmployee = new FullDayEmployee(48, "Mark", 100, 140);
+        fullDayEmployee.addEmployer(new FullDayEmployee(49, "Carl", 260, 100));
+        fullDayEmployee.addEmployer(new FullDayEmployee(50, "Vasa", 220, 180));
+        fullDayEmployee.addEmployer(new FullDayEmployee(60, "Adalbert", 150, 150));
 
         fullDayEmployee.data.add(fullDayEmployee);
 
@@ -253,14 +280,23 @@ class Checker {
         fullDayEmployee.printEmployer(fullDayEmployee.getByKey(fullDayEmployee.lowestSalary()));
         System.out.println("\nAverage salary: " + fullDayEmployee.averageSalary());
 
-        Employee employee = new Employee(41, "Mark", 2000);
-        employee.addEmployer(new Employee(412, "Carl", 3000));
-        employee.addEmployer(new Employee(4241, "Vasa", 3300));
-        employee.addEmployer(new Employee(421, "Adalbert", 6500));
+        PartTime partTime = new PartTime(41, "Mark", 20,  150);
+        partTime.addEmployer(new PartTime(412, "Carl", 20, 250));
+        partTime.addEmployer(new PartTime(4241, "Vasa", 15, 180));
+        partTime.addEmployer(new PartTime(421, "Adalbert", 20, 400));
 
-        if (fullDayEmployee.averageSalary() > employee.averageSalary()) {
+        System.out.println("Example with part time: ");
+        partTime.printEmployee();
+        System.out.println("Total salary: " + partTime.totalSalary());
+        System.out.println("\nHighest salary: ");
+        partTime.printEmployer(partTime.getByKey(partTime.highestSalary()));
+        System.out.println("\nLowest salary: ");
+        partTime.printEmployer(partTime.getByKey(partTime.lowestSalary()));
+        System.out.println("\nAverage salary: " + partTime.averageSalary());
+
+        if (fullDayEmployee.averageSalary() > partTime.averageSalary()) {
             System.out.println("Full time get more salary !");
-        } else if (fullDayEmployee.averageSalary() < employee.averageSalary()) {
+        } else if (fullDayEmployee.averageSalary() < partTime.averageSalary()) {
             System.out.println("Part-time get more salary !");
         } else {
             System.out.println("Full time == Part-time");

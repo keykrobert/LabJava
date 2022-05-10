@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><config>
+	<methodPoly1>setFile</methodPoly1>
+	<methodPoly1>saveConfig</methodPoly1>
+	<methodPoly2>createNode</methodPoly2>
+</config>
